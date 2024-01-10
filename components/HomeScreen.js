@@ -1,27 +1,31 @@
-import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { Dimensions } from 'react-native';
-
-//library.add();
+import InputUsername from './InputUsername';  // Import komponen InputUsername
 
 const { width, height } = Dimensions.get('screen');
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
+  const [username, setUsername] = useState('');
+
+  useEffect(() => {
+    if (route.params?.username) {
+      setUsername(route.params.username);
+    }
+  }, [route.params?.username]);
+
   return (
     <ImageBackground
       source={require('../assets/BGhome.png')}
       style={styles.bgImage}
     >
       <View style={styles.container}>
+        {username ? (
+          <Text style={styles.username}>Selamat datang, {username}!</Text>
+        ) : null}
         <Image
-        source={require('../assets/Logo.png')}
-        style={styles.logo}
+          source={require('../assets/Logo.png')}
+          style={styles.logo}
         />
         <View style={styles.location}>
           <View style={styles.row}>
@@ -69,6 +73,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  username: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    marginTop: 20
+    
+  },
   bgImage: {
     flex: 1,
     resizeMode: 'cover',
@@ -100,7 +111,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     resizeMode: 'contain',
     width: width * 0.4,
-    top: height * -0.35,
+    top: height * -0.30,
     left: width * 0.3, 
     marginHorizontal: 'auto',
   },

@@ -7,11 +7,7 @@ import Puzzle from './components/Puzzle';
 import HurufdanAngka from './components/HurufdanAngka';
 import MengenalBentuk from './components/MengenalBentuk';
 import { name as appName } from './app.json';
-AppRegistry.registerComponent(appName, () => App);
-
-
-
-
+import InputUsername from './components/InputUsername';
 
 const Stack = createStackNavigator();
 
@@ -19,13 +15,17 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name='HomeScreen' component={HomeScreen}/>
-      <Stack.Screen name='MengenalBentuk' component={MengenalBentuk}/>
-      <Stack.Screen name='HurufdanAngka' component={HurufdanAngka}/>
-      <Stack.Screen name='Puzzle' component={Puzzle}/>
+        <Stack.Screen name='InputUsername'>
+          {(props) => <InputUsername {...props} onSubmit={username => props.navigation.navigate('HomeScreen', { username })} />}
+        </Stack.Screen>
+        <Stack.Screen name='HomeScreen' component={HomeScreen}/>
+        <Stack.Screen name='MengenalBentuk' component={MengenalBentuk}/>
+        <Stack.Screen name='HurufdanAngka' component={HurufdanAngka}/>
+        <Stack.Screen name='Puzzle' component={Puzzle}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
+AppRegistry.registerComponent(appName, () => App);
 
 export default App;
